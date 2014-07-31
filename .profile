@@ -20,12 +20,3 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
-
-if [ -d "$HOME/.rvm/bin" ] ; then
-  PATH="$PATH:$HOME/.rvm/bin"
-fi
-
-export JRUBY_OPTS="--2.0 -Xcext.enabled=true"
-
-source /home/josiah/.rvm/scripts/rvm
-

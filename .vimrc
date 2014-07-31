@@ -1,13 +1,17 @@
 execute pathogen#infect()
 
-autocmd Syntax c,cpp,vim,less,haml,ruby,css,html,xml,html,xhtml,perl normal zR
+" autocmd Syntax c,cpp,vim,less,haml,ruby,css,html,xml,html,xhtml,perl normal zR
+
+" let g:rainbow_active = 1
+
+let g:necoghc_enable_detailed_browse = 1
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
 
 set mouse+=a
 if &term =~ '^screen'
     " tmux knows the extended mouse mode
     set ttymouse=xterm2
 endif
-
 set nocompatible
 
 " first, enable status line always
@@ -32,7 +36,6 @@ autocmd BufLeave,FocusLost * silent!
 set nobackup
 set nowb
 set noswapfile
-
 " close all the buffers
 map <leader>cb :1,1000 bd!<cr>
 
@@ -40,7 +43,7 @@ function! InsertStatuslineColor(mode)
   if a:mode == 'i'
     hi statusline ctermbg=53 ctermfg=11
   elseif a:mode == 'r'
-    hi statusline ctermbg=22 ctermfg=203
+    hi statusline ctermbg=17 ctermfg=208
   else
     hi statusline ctermbg=52 ctermfg=10
   endif
@@ -49,8 +52,15 @@ endfunction
 au InsertEnter * call InsertStatuslineColor(v:insertmode)
 au InsertChange * call InsertStatuslineColor(v:insertmode)
 au InsertLeave * hi statusline ctermbg=232 ctermfg=7
-
+" colorscheme distinguished
 colorscheme jgb256
+" syntax enable
+" set background=light " dark | light "
+" let g:solarized_visibility="high"
+" let g:solarized_contrast="high"
+" " let g:solarized_termtrans = 1
+" let g:solarized_termcolors=256
+" colorscheme solarized
 set guifont=Monaco
 
 set hlsearch
@@ -85,8 +95,8 @@ let g:gist_clip_command = 'pbcopy'
 "autocmd FileType html,xml,haml,less,css,ruby highlight OverLength ctermbg=darkred ctermfg=white guibg=#59
 
 if exists('+colorcolumn')
-    highlight ColorColumn ctermbg=233 guibg=black
-    let &colorcolumn="81,".join(range(121,999),",")
+    highlight ColorColumn ctermbg=235 guibg=black
+    let &colorcolumn="121"
 else
     au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
@@ -162,13 +172,12 @@ noremap <C-F4> <C-W>c
 inoremap <C-F4> <C-O><C-W>c
 cnoremap <C-F4> <C-C><C-W>c
 
-
 set number
 
 set foldmethod=syntax
 autocmd Syntax * normal zR
 set cul
-hi CursorLine guibg=black guifg=NONE ctermbg=235 ctermfg=NONE
+" hi CursorLine guibg=black guifg=NONE ctermbg=235
 hi Cursor guibg=white guifg=black
 set nowrap
 set lbr
@@ -212,6 +221,7 @@ nmap <c-j>   <c-w><down>
 nmap <c-k>     <c-w><up>
 nmap <c-h>   <c-w>h
 nmap <c-l>  <c-w>l
+imap <C-Tab> <C-x><C-o>
 
 " map a right hand leader key
 nmap - <leader>
@@ -249,13 +259,6 @@ nmap <leader>mbt :MBEToggle<cr>
 nmap <leader>se :Errors<cr>
 nmap <leader>st  :SyntasticToggleMode<cr>
 nmap <leader>sc  :SyntasticCheck<cr>
-
-" tern shortcuts
-nmap <leader>t] :TernDef<cr>
-nmap <leader>td :TernDoc<cr>
-nmap <leader>tt :TernType<cr>
-nmap <leader>tr :TernRefs<cr>
-nmap <leader>tm :TernRename<cr>
 
 " Bundler shortcuts
 nmap <leader>gem :Bopen
@@ -308,6 +311,23 @@ nmap <leader>tst :!rspec spec/
 
 " generate ctags
 nmap <leader>gt :Dispatch /usr/bin/ctags -R --exclude=.git --tag-relative=yes *<cr>
+nmap <leader>ght :Dispatch hasktags --ignore-close-implementation --ctags .; sort tags<cr>
+
+" haskell
+nmap <leader>ht :GhcModType<cr>
+nmap <leader>h<Esc> :GhcModTypeClear<cr>
+nmap <leader>hc :GhcModCheck<cr>
+nmap <leader>hl :GhcModLint<cr>
+nmap <leader>hi :GhcModInfo<cr>
+nmap <leader>he :GhcModExpand<cr>
+
+" clojure
+nmap <leader>lr :Dispatch lein run<cr>
+nmap <leader>lrp :Dispatch lein repl<cr>
+nmap <leader>ce :Eval<cr>
+vmap <C-e> :Eval<cr>
+" build clojure leiningen project
+nmap <leader>lb :Dispatch lein uberjar<cr>
 
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
@@ -338,3 +358,22 @@ function! HasPaste()
 
   return ''
 endfunction
+
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+au Syntax cpp,java RainbowParenthesesLoadChevrons
+au VimEnter * RainbowParenthesesToggle
+
+let g:haskell_conceal_wide = 1
+let g:haskell_conceal = 1
+
+" Show syntax highlighting groups for word under cursor
+nmap <leader>h :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+

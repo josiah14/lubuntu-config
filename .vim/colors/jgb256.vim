@@ -25,7 +25,7 @@ hi Normal	guifg=White guibg=grey20
 
 " highlight groups
 hi Cursor	guibg=khaki guifg=slategrey
-hi CursorLine ctermbg=233 guibg=black 
+hi CursorLine ctermbg=232 guibg=black
 "hi CursorIM
 "hi Directory
 "hi DiffAdd
@@ -69,6 +69,7 @@ hi Ignore	guifg=grey40
 hi Todo		guifg=orangered guibg=yellow2
 
 " color terminal definitions
+hi Normal ctermbg=233
 hi SpecialKey	ctermfg=darkgreen
 hi NonText	cterm=bold ctermfg=darkblue
 hi Directory	ctermfg=32
@@ -87,8 +88,8 @@ hi Visual	cterm=reverse
 hi VisualNOS	cterm=bold,underline
 hi WarningMsg	ctermfg=1
 hi WildMenu	ctermfg=0 ctermbg=3
-hi Folded	ctermfg=darkgrey ctermbg=NONE
-hi FoldColumn	ctermfg=darkgrey ctermbg=NONE
+hi Folded	ctermfg=darkgrey
+hi FoldColumn	ctermfg=darkgrey
 hi DiffAdd	ctermbg=4
 hi DiffChange	ctermbg=5
 hi DiffDelete	cterm=bold ctermfg=4 ctermbg=6
@@ -98,7 +99,7 @@ hi Constant	cterm=bold ctermfg=34
 hi Special	ctermfg=5
 hi Identifier	ctermfg=39
 hi Statement	ctermfg=226
-hi PreProc	ctermfg=130 
+hi PreProc	ctermfg=130
 hi Type		ctermfg=178
 hi Underlined	cterm=underline ctermfg=5
 hi Ignore	cterm=bold ctermfg=7
@@ -106,10 +107,18 @@ hi Ignore	ctermfg=darkgrey
 hi Error	cterm=bold ctermfg=7 ctermbg=1
 hi String   ctermfg=28
 hi Function ctermfg=69
+hi hsType ctermfg=33
+hi hsTypedef ctermfg=226
+hi hsStructure ctermfg=226
+hi hsVarSym ctermfg=160 cterm=bold
+hi hs_DeclareFunction ctermfg=196
+hi hs_hlFunctionName ctermfg=214
+hi hsImportLabel ctermfg=98
+hi hsAsLabel ctermfg=98
 
 " #{foo}, <%= bar %>
 hi Delimiter ctermfg=216
-hi railsMethod ctermfg=124
+hi railsMethod ctermfg=160
 
 hi xmlTag ctermfg=25
 hi! link xmlTagName  xmlTag
